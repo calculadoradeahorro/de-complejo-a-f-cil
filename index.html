@@ -1,800 +1,394 @@
-```html
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#102a43">
   <title>Argieder Smart Reports</title>
   <style>
     :root {
-      --navy: #102a43;
-      --navy-light: #183f5b;
-      --teal: #16817c;
-      --teal-light: #e4f5f1;
-      --gold: #d4aa64;
-      --background: #f4f7f9;
-      --white: #fff;
-      --text: #203447;
-      --muted: #738293;
-      --border: #e1e8ee;
+      --navy: #13253f;
+      --blue: #3269df;
+      --bg: #f4f7fb;
+      --text: #202c3c;
+      --muted: #718096;
+      --border: #dce4ef;
     }
 
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      background: var(--background);
+      font-family: Arial, Helvetica, sans-serif;
       color: var(--text);
-      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Roboto, sans-serif;
-    }
-
-    button, input { font: inherit; }
-
-    .container {
-      width: min(1120px, calc(100% - 40px));
-      margin: auto;
+      background: var(--bg);
     }
 
     header {
-      height: 86px;
-      display: flex;
-      align-items: center;
-      border-bottom: 1px solid var(--border);
-      background: white;
-    }
-
-    .header-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
+      background: var(--navy);
+      color: white;
+      padding: 23px 6%;
     }
 
     .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
     }
 
-    .brand-icon {
-      width: 44px;
-      height: 44px;
-      display: grid;
-      place-items: center;
-      color: white;
-      background: var(--navy);
-      border-radius: 13px;
-      font-family: Georgia, serif;
-      font-size: 27px;
-    }
+    .brand span { color: #80aaff; }
 
-    .brand-name {
+    header p {
+      margin: 7px 0 0;
+      color: #c4d1e4;
       font-size: 13px;
-      font-weight: 850;
-      letter-spacing: 2px;
-      color: var(--navy);
     }
 
-    .brand-name span { color: var(--teal); }
-
-    .brand-caption {
-      color: var(--muted);
-      font-size: 11px;
-      margin-top: 4px;
+    main {
+      max-width: 820px;
+      margin: 48px auto;
+      padding: 0 20px;
     }
 
-    .privacy-pill {
-      color: #276d60;
-      background: var(--teal-light);
-      padding: 9px 13px;
-      border-radius: 50px;
-      font-size: 12px;
-    }
-
-    .privacy-pill::before {
-      content: "";
-      display: inline-block;
-      width: 7px;
-      height: 7px;
-      background: #299879;
-      border-radius: 50%;
-      margin-right: 7px;
-    }
-
-    .hero {
-      padding: 70px 0 43px;
-      max-width: 790px;
-    }
+    .intro { margin-bottom: 27px; }
 
     .eyebrow {
-      color: var(--teal);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 2.5px;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
     }
 
     h1 {
       color: var(--navy);
-      font-size: clamp(40px, 6vw, 65px);
-      line-height: 1.06;
-      letter-spacing: -2.7px;
-      margin: 19px 0;
+      font-size: clamp(29px, 5vw, 42px);
+      line-height: 1.15;
+      margin: 12px 0;
+      letter-spacing: -1px;
     }
 
-    h1 em {
-      color: var(--teal);
-      font-family: Georgia, serif;
-      font-weight: 400;
-    }
-
-    .hero > p {
+    .intro p {
       color: var(--muted);
-      font-size: 17px;
-      line-height: 1.8;
-      max-width: 680px;
+      font-size: 16px;
+      line-height: 1.7;
     }
 
-    .workspace {
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 24px;
-      align-items: stretch;
-      padding-bottom: 55px;
-    }
-
-    .card {
-      background: var(--white);
+    .panel {
+      background: white;
       border: 1px solid var(--border);
-      border-radius: 20px;
-      box-shadow: 0 12px 35px rgba(16, 42, 67, .045);
-    }
-
-    .upload-card { padding: 32px; }
-
-    .upload-symbol {
-      width: 53px;
-      height: 53px;
-      display: grid;
-      place-items: center;
       border-radius: 16px;
-      background: var(--teal-light);
-      color: var(--teal);
-      font-size: 29px;
+      padding: 27px;
       margin-bottom: 20px;
+      box-shadow: 0 8px 30px rgba(19, 37, 63, 0.04);
     }
 
-    h2 {
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      margin-bottom: 18px;
+      font-weight: 700;
       color: var(--navy);
-      font-size: 23px;
-      margin: 0 0 9px;
     }
 
-    .muted {
+    .number {
+      display: inline-flex;
+      width: 29px;
+      height: 29px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #eaf0ff;
+      color: var(--blue);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .dropzone {
+      border: 2px dashed #c8d5e8;
+      border-radius: 12px;
+      padding: 29px 15px;
+      text-align: center;
+      background: #f9fbff;
+    }
+
+    .file-icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .dropzone p {
       color: var(--muted);
       font-size: 13px;
       line-height: 1.6;
     }
 
-    .dropzone {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 210px;
-      padding: 24px;
-      margin-top: 24px;
-      text-align: center;
-      background: #fbfdfd;
-      border: 1.5px dashed #a7c8cc;
-      border-radius: 15px;
-      cursor: pointer;
-      transition: .2s ease;
+    input[type="file"] {
+      display: block;
+      width: 100%;
+      max-width: 340px;
+      margin: 15px auto 0;
+      font-size: 13px;
     }
 
-    .dropzone:hover, .dropzone.dragover {
-      background: #edf8f6;
-      border-color: var(--teal);
-    }
-
-    .file-symbol {
-      font-size: 35px;
-      color: var(--teal);
-      margin-bottom: 12px;
-    }
-
-    .dropzone strong {
-      color: var(--navy);
-      font-size: 14px;
-    }
-
-    .dropzone span {
+    .file-status {
+      font-size: 13px;
       color: var(--muted);
-      font-size: 12px;
-      margin-top: 9px;
-    }
-
-    .dropzone u {
-      color: var(--teal);
-      text-underline-offset: 3px;
-    }
-
-    #fileInput {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      opacity: 0;
-      overflow: hidden;
-    }
-
-    .selected-file {
-      display: none;
-      align-items: center;
-      gap: 10px;
-      padding: 12px;
-      margin-top: 14px;
-      background: #f3f8fa;
-      border-radius: 10px;
-      font-size: 12px;
+      margin-top: 13px;
       overflow-wrap: anywhere;
     }
 
-    .selected-file.visible { display: flex; }
-
-    .selected-file .filename {
-      flex: 1;
-      color: var(--navy);
-      font-weight: 650;
-    }
-
-    .remove-file {
-      border: 0;
-      background: transparent;
-      color: #a34b42;
-      cursor: pointer;
-    }
-
-    .primary-button {
-      width: 100%;
-      border: 0;
-      border-radius: 11px;
-      background: var(--navy);
-      color: white;
+    label {
+      display: block;
+      margin-bottom: 10px;
       font-size: 14px;
-      font-weight: 750;
-      padding: 17px 19px;
-      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    textarea {
+      display: block;
+      width: 100%;
+      min-height: 250px;
+      resize: vertical;
+      padding: 15px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font: 14px/1.7 Arial, sans-serif;
+      color: #34445b;
+      background: #fbfcfe;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      border: none;
+      border-radius: 9px;
+      padding: 15px 18px;
+      font-size: 15px;
+      font-weight: bold;
       cursor: pointer;
       transition: background .2s, transform .2s;
     }
 
-    .primary-button:hover {
-      background: var(--navy-light);
-      transform: translateY(-1px);
+    button:hover { transform: translateY(-1px); }
+
+    .primary {
+      color: white;
+      background: var(--blue);
     }
 
-    .primary-button:disabled {
-      opacity: .6;
-      cursor: wait;
+    .primary:hover { background: #2454c3; }
+
+    .secondary {
+      color: var(--navy);
+      background: #edf2f9;
+      margin-top: 11px;
+    }
+
+    .secondary:hover { background: #e0e9f6; }
+
+    button:disabled {
+      opacity: .45;
+      cursor: not-allowed;
       transform: none;
     }
 
-    .button-arrow { float: right; font-size: 18px; }
-
-    .fineprint {
-      text-align: center;
-      color: #8b98a4;
-      font-size: 10px;
+    .notice {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 9px;
+      background: #fff8e8;
+      color: #77551a;
+      font-size: 13px;
       line-height: 1.6;
-      margin-top: 14px;
     }
 
-    .side-card { padding: 30px 27px; }
-
-    .side-heading {
-      color: var(--muted);
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      margin-bottom: 30px;
-    }
-
-    .benefit {
-      display: flex;
-      gap: 14px;
-      margin-bottom: 27px;
-    }
-
-    .benefit-icon {
-      flex-shrink: 0;
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      background: var(--teal-light);
-      color: var(--teal);
-      border-radius: 12px;
-      font-size: 21px;
-    }
-
-    .benefit h3 {
-      font-size: 14px;
-      color: var(--navy);
-      margin: 2px 0 7px;
-    }
-
-    .benefit p {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.7;
+    .steps-list {
       margin: 0;
+      padding-left: 20px;
+      color: #526176;
+      font-size: 14px;
+      line-height: 1.9;
     }
-
-    .security-box {
-      display: flex;
-      gap: 12px;
-      padding: 16px;
-      border: 1px solid var(--border);
-      background: #f8fafb;
-      border-radius: 12px;
-      margin-top: 32px;
-    }
-
-    .security-icon { color: var(--teal); font-size: 21px; }
-
-    .security-box strong {
-      color: var(--navy);
-      font-size: 12px;
-    }
-
-    .security-box p {
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.6;
-      margin: 6px 0 0;
-    }
-
-    .status {
-      display: none;
-      padding: 16px 18px;
-      margin: -30px 0 35px;
-      background: #e9f7f3;
-      color: #236e60;
-      border: 1px solid #cce9df;
-      border-radius: 12px;
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    .status.visible { display: block; }
-
-    .status.error {
-      background: #fff2f0;
-      border-color: #f0d1cc;
-      color: #963e33;
-    }
-
-    .result {
-      display: none;
-      padding: 30px;
-      margin-bottom: 55px;
-    }
-
-    .result.visible { display: block; }
-
-    .result-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 18px;
-    }
-
-    .result h2 { margin-top: 9px; }
-
-    .download-button {
-      display: inline-block;
-      background: var(--teal);
-      color: white;
-      border-radius: 10px;
-      padding: 13px 17px;
-      font-size: 12px;
-      font-weight: 750;
-      text-decoration: none;
-    }
-
-    .result-summary {
-      margin: 23px 0;
-      color: #465a6c;
-      font-size: 15px;
-      line-height: 1.8;
-    }
-
-    .findings {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 12px;
-    }
-
-    .finding {
-      border: 1px solid var(--border);
-      background: #fbfcfd;
-      border-radius: 12px;
-      padding: 17px;
-      color: #405568;
-      font-size: 13px;
-      line-height: 1.7;
-    }
-
-    .finding::before {
-      content: "✓";
-      color: var(--teal);
-      font-weight: 900;
-      margin-right: 8px;
-    }
-
-    .warnings {
-      display: none;
-      margin-top: 20px;
-      padding: 15px;
-      border-radius: 10px;
-      background: #fff7e8;
-      color: #78591c;
-      font-size: 12px;
-      line-height: 1.7;
-    }
-
-    .warnings.visible { display: block; }
 
     footer {
-      border-top: 1px solid var(--border);
-      padding: 27px 0;
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      color: #8997a3;
-      font-size: 10px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 25px 15px 35px;
     }
 
-    footer strong {
-      color: var(--navy);
-      letter-spacing: 1.5px;
-    }
-
-    @media (max-width: 760px) {
-      .container { width: min(100% - 28px, 550px); }
-      header { height: 75px; }
-      .privacy-pill { font-size: 0; padding: 10px; }
-      .privacy-pill::before { margin: 0; }
-      .hero { padding: 48px 0 30px; }
-      h1 { letter-spacing: -1.8px; }
-      .hero > p { font-size: 15px; }
-      .workspace { grid-template-columns: 1fr; gap: 16px; }
-      .upload-card, .side-card { padding: 23px; }
-      .result { padding: 22px; }
-      footer { flex-direction: column; }
+    @media (max-width: 500px) {
+      main { margin: 30px auto; }
+      .panel { padding: 19px; }
     }
   </style>
 </head>
-
 <body>
-  <header>
-    <div class="container header-inner">
-      <div class="brand">
-        <div class="brand-icon">A</div>
-        <div>
-          <div class="brand-name">ARGIEDER <span>SMART REPORTS</span></div>
-          <div class="brand-caption">De datos complejos a decisiones claras</div>
-        </div>
-      </div>
-      <div class="privacy-pill">Procesamiento seguro</div>
+
+<header>
+  <div class="brand">ARGIEDER <span>SMART REPORTS</span></div>
+  <p>De datos complejos a decisiones inteligentes.</p>
+</header>
+
+<main>
+  <section class="intro">
+    <div class="eyebrow">Análisis inteligente de datos</div>
+    <h1>Convierte tus datos en informes profesionales.</h1>
+    <p>
+      Selecciona tu Excel o PDF, prepara el análisis y utiliza
+      Claude para crear gráficos claros, detectar oportunidades
+      de ahorro y presentar resultados de forma profesional.
+    </p>
+  </section>
+
+  <section class="panel">
+    <div class="step">
+      <span class="number">1</span>
+      Selecciona tu archivo
     </div>
-  </header>
 
-  <main class="container">
-    <section class="hero">
-      <div class="eyebrow">INFORMES INTELIGENTES</div>
-      <h1>Transforma tus documentos<br>en <em>claridad.</em></h1>
-      <p>
-        Convierte tablas extensas y documentos complejos en gráficos
-        fáciles de entender, conclusiones relevantes e informes
-        profesionales pensados para tus clientes.
-      </p>
-    </section>
-
-    <section class="workspace">
-      <div class="card upload-card">
-        <div class="upload-symbol">↥</div>
-        <h2>Genera tu informe</h2>
-        <p class="muted">
-          Sube un documento y deja que el sistema prepare el análisis automáticamente.
-        </p>
-
-        <form id="uploadForm">
-          <label class="dropzone" id="dropzone" for="fileInput">
-            <div class="file-symbol">▤</div>
-            <strong id="dropTitle">Arrastra tu archivo aquí</strong>
-            <span id="dropSubtitle">o <u>selecciona un archivo</u> de tu ordenador</span>
-            <span>Excel, PDF o CSV · Máximo 20 MB</span>
-            <input
-              id="fileInput"
-              name="file"
-              type="file"
-              accept=".xlsx,.xls,.csv,.pdf"
-              required
-            >
-          </label>
-
-          <div class="selected-file" id="selectedFile">
-            <span>▤</span>
-            <span class="filename" id="filename"></span>
-            <button class="remove-file" id="removeFile" type="button" aria-label="Quitar archivo">✕</button>
-          </div>
-
-          <button class="primary-button" id="submitButton" type="submit">
-            Generar informe automáticamente <span class="button-arrow">→</span>
-          </button>
-        </form>
-
-        <p class="fineprint">
-          Los resultados se generan automáticamente. Comprueba las cifras
-          antes de compartir el informe con el cliente.
-        </p>
+    <div class="dropzone">
+      <div class="file-icon">📊</div>
+      <strong>Elige el documento que quieres analizar</strong>
+      <p>Excel, CSV o PDF. El archivo no se sube desde esta página.</p>
+      <input
+        id="fileInput"
+        type="file"
+        accept=".xlsx,.xls,.csv,.pdf"
+      >
+      <div id="fileStatus" class="file-status">
+        Todavía no has seleccionado ningún archivo.
       </div>
+    </div>
+  </section>
 
-      <aside class="card side-card">
-        <div class="side-heading">QUÉ RECIBIRÁS</div>
+  <section class="panel">
+    <div class="step">
+      <span class="number">2</span>
+      Tu instrucción de análisis
+    </div>
 
-        <div class="benefit">
-          <div class="benefit-icon">▥</div>
-          <div>
-            <h3>Gráficos claros y útiles</h3>
-            <p>Comparativas visuales para identificar tendencias, diferencias y oportunidades.</p>
-          </div>
-        </div>
+    <label for="prompt">Prompt profesional</label>
 
-        <div class="benefit">
-          <div class="benefit-icon">◉</div>
-          <div>
-            <h3>Conclusiones comprensibles</h3>
-            <p>Explicaciones en lenguaje sencillo para que tus clientes entiendan los resultados.</p>
-          </div>
-        </div>
+    <textarea id="prompt">Actúa como un analista de datos y consultor empresarial experto en visualización de información.
 
-        <div class="benefit">
-          <div class="benefit-icon">↧</div>
-          <div>
-            <h3>Informe profesional</h3>
-            <p>Un documento ordenado y listo para revisar, descargar y presentar.</p>
-          </div>
-        </div>
+Analiza el archivo que adjunto y crea un informe profesional, claro y visualmente atractivo para que mi cliente pueda comprender fácilmente los beneficios y las oportunidades de ahorro.
 
-        <div class="security-box">
-          <div class="security-icon">⌑</div>
-          <div>
-            <strong>Conexión protegida</strong>
-            <p>
-              La clave de IA debe permanecer en el servidor. Esta página
-              necesita un backend para analizar documentos y generar el PDF.
-            </p>
-          </div>
-        </div>
-      </aside>
-    </section>
+OBJETIVOS:
+1. Identifica los datos más relevantes y las principales conclusiones.
+2. Crea gráficas fáciles de entender, legibles y de excelente calidad visual.
+3. Utiliza títulos claros, unidades, leyendas y etiquetas legibles.
+4. Destaca los ahorros, las diferencias, las tendencias y las oportunidades detectadas.
+5. Explica cada gráfica con un lenguaje sencillo y orientado al cliente.
+6. Incluye un resumen ejecutivo, los principales hallazgos y recomendaciones prácticas.
+7. Si los datos lo permiten, cuantifica los ahorros y explica cómo se calculan.
 
-    <div class="status" id="status" role="status" aria-live="polite"></div>
+PRESENTACIÓN:
+- Utiliza un estilo corporativo, moderno y profesional.
+- Evita gráficos innecesarios, textos pequeños y diseños recargados.
+- Organiza el análisis de manera lógica.
+- Presenta primero las conclusiones más importantes.
+- Si es posible, genera un informe descargable en PDF con las gráficas integradas.
 
-    <section class="card result" id="result">
-      <div class="result-header">
-        <div>
-          <div class="eyebrow">RESULTADO DEL ANÁLISIS</div>
-          <h2 id="resultTitle">Tu informe está listo</h2>
-        </div>
-        <a class="download-button" id="downloadButton" href="#" hidden>
-          Descargar PDF ↓
-        </a>
-      </div>
+PRECISIÓN:
+- No inventes cifras, ahorros ni datos que no estén respaldados por el archivo.
+- Indica claramente cualquier supuesto, limitación o dato que falte.
+- Si el documento no contiene información suficiente para calcular un ahorro, explícalo.
+- Si hay varias hojas o tablas, identifica cuáles son relevantes para el análisis.
 
-      <p class="result-summary" id="summary"></p>
-      <div class="findings" id="findings"></div>
-      <div class="warnings" id="warnings"></div>
-    </section>
-  </main>
+El resultado debe tener la calidad de un informe que una empresa pueda presentar directamente a un cliente.
 
-  <footer class="container">
-    <strong>ARGIEDER SMART REPORTS</strong>
-    <span>Informes claros. Decisiones mejores.</span>
-  </footer>
+Archivo seleccionado: [adjuntar el archivo manualmente en Claude].</textarea>
 
-  <script>
-    /*
-      IMPORTANTE:
-      1. Esta web puede alojarse en GitHub Pages.
-      2. Para procesar documentos, necesitas un backend propio.
-      3. Configura la URL de ese backend en API_URL.
-      4. NUNCA pongas tu clave de Claude/Anthropic aquí.
-    */
+    <button id="copyButton" class="primary" style="margin-top:14px">
+      Copiar prompt de análisis
+    </button>
 
-    const API_URL = ""; // Ejemplo: "https://tu-servidor.com"
+    <button id="openButton" class="secondary">
+      Abrir Claude
+    </button>
 
-    const form = document.getElementById("uploadForm");
-    const fileInput = document.getElementById("fileInput");
-    const dropzone = document.getElementById("dropzone");
-    const selectedFile = document.getElementById("selectedFile");
-    const filename = document.getElementById("filename");
-    const submitButton = document.getElementById("submitButton");
-    const statusBox = document.getElementById("status");
-    const resultBox = document.getElementById("result");
+    <div class="notice">
+      <strong>Importante:</strong> después de abrir Claude, tendrás
+      que adjuntar el archivo manualmente, pegar el prompt y enviarlo.
+      Esta página no envía tus documentos a Claude automáticamente.
+    </div>
+  </section>
 
-    function showStatus(message, isError = false) {
-      statusBox.textContent = message;
-      statusBox.classList.add("visible");
-      statusBox.classList.toggle("error", isError);
+  <section class="panel">
+    <div class="step">
+      <span class="number">3</span>
+      Termina tu informe en Claude
+    </div>
+    <ol class="steps-list">
+      <li>Abre Claude con el botón anterior.</li>
+      <li>Adjunta el Excel o PDF desde tu dispositivo.</li>
+      <li>Pega el prompt copiado en el cuadro de conversación.</li>
+      <li>Envía el mensaje y solicita el informe descargable.</li>
+    </ol>
+  </section>
+</main>
+
+<footer>
+  Argieder Smart Reports · Herramienta de apoyo al análisis empresarial
+</footer>
+
+<script>
+  const fileInput = document.getElementById("fileInput");
+  const fileStatus = document.getElementById("fileStatus");
+  const promptBox = document.getElementById("prompt");
+  const copyButton = document.getElementById("copyButton");
+  const openButton = document.getElementById("openButton");
+
+  let selectedFile = null;
+
+  fileInput.addEventListener("change", () => {
+    selectedFile = fileInput.files[0] || null;
+
+    if (!selectedFile) {
+      fileStatus.textContent =
+        "Todavía no has seleccionado ningún archivo.";
+      return;
     }
 
-    function setFile(file) {
-      if (!file) return;
+    const sizeMB = selectedFile.size / (1024 * 1024);
 
-      const allowed = [".xlsx", ".xls", ".csv", ".pdf"];
-      const extension = "." + file.name.split(".").pop().toLowerCase();
-
-      if (!allowed.includes(extension)) {
-        showStatus("Formato no compatible. Selecciona un Excel, PDF o CSV.", true);
-        return;
-      }
-
-      if (file.size > 20 * 1024 * 1024) {
-        showStatus("El archivo supera el límite de 20 MB.", true);
-        return;
-      }
-
-      const transfer = new DataTransfer();
-      transfer.items.add(file);
-      fileInput.files = transfer.files;
-
-      filename.textContent = file.name;
-      selectedFile.classList.add("visible");
-      document.getElementById("dropTitle").textContent = "Archivo seleccionado";
-      document.getElementById("dropSubtitle").textContent = "Puedes cambiarlo haciendo clic aquí";
-      statusBox.classList.remove("visible");
-    }
-
-    fileInput.addEventListener("change", () => {
-      if (fileInput.files[0]) setFile(fileInput.files[0]);
-    });
-
-    ["dragenter", "dragover"].forEach(eventName => {
-      dropzone.addEventListener(eventName, event => {
-        event.preventDefault();
-        dropzone.classList.add("dragover");
-      });
-    });
-
-    ["dragleave", "drop"].forEach(eventName => {
-      dropzone.addEventListener(eventName, event => {
-        event.preventDefault();
-        dropzone.classList.remove("dragover");
-      });
-    });
-
-    dropzone.addEventListener("drop", event => {
-      if (event.dataTransfer.files.length) {
-        setFile(event.dataTransfer.files[0]);
-      }
-    });
-
-    document.getElementById("removeFile").addEventListener("click", () => {
+    if (sizeMB > 20) {
+      fileStatus.textContent =
+        "El archivo supera los 20 MB. Elige uno más pequeño.";
+      selectedFile = null;
       fileInput.value = "";
-      selectedFile.classList.remove("visible");
-      document.getElementById("dropTitle").textContent = "Arrastra tu archivo aquí";
-      document.getElementById("dropSubtitle").innerHTML =
-        'o <u>selecciona un archivo</u> de tu ordenador';
-      statusBox.classList.remove("visible");
-    });
-
-    function renderResults(data) {
-      document.getElementById("resultTitle").textContent =
-        data.title || "Tu informe está listo";
-
-      document.getElementById("summary").textContent =
-        data.summary || "El análisis ha finalizado.";
-
-      const findings = document.getElementById("findings");
-      findings.replaceChildren();
-
-      (data.findings || []).forEach(text => {
-        const item = document.createElement("div");
-        item.className = "finding";
-        item.textContent = text;
-        findings.appendChild(item);
-      });
-
-      const warnings = document.getElementById("warnings");
-      warnings.replaceChildren();
-
-      if (data.warnings && data.warnings.length) {
-        data.warnings.forEach(text => {
-          const item = document.createElement("p");
-          item.textContent = "• " + text;
-          warnings.appendChild(item);
-        });
-        warnings.classList.add("visible");
-      } else {
-        warnings.classList.remove("visible");
-      }
-
-      const download = document.getElementById("downloadButton");
-
-      if (data.pdf_url) {
-        // Preferiblemente, el servidor devuelve una URL de descarga temporal.
-        download.href = data.pdf_url;
-        download.hidden = false;
-      } else {
-        download.hidden = true;
-      }
-
-      resultBox.classList.add("visible");
-      resultBox.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
     }
 
-    form.addEventListener("submit", async event => {
-      event.preventDefault();
+    fileStatus.textContent =
+      "Archivo seleccionado: " + selectedFile.name +
+      " (" + sizeMB.toFixed(2) + " MB). Recuerda adjuntarlo en Claude.";
+  });
 
-      const file = fileInput.files[0];
+  copyButton.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(promptBox.value);
+      copyButton.textContent = "✓ Prompt copiado";
+      setTimeout(() => {
+        copyButton.textContent = "Copiar prompt de análisis";
+      }, 2500);
+    } catch (error) {
+      promptBox.focus();
+      promptBox.select();
+      const copied = document.execCommand("copy");
+      copyButton.textContent = copied
+        ? "✓ Prompt copiado"
+        : "Selecciona y copia el texto manualmente";
+    }
+  });
 
-      if (!file) {
-        showStatus("Primero selecciona un archivo.", true);
-        return;
-      }
+  openButton.addEventListener("click", () => {
+    window.open("https://claude.ai/new", "_blank", "noopener");
+  });
+</script>
 
-      if (!API_URL) {
-        showStatus(
-          "La interfaz está lista, pero todavía no está conectada al servidor de IA. " +
-          "Configura API_URL en este archivo cuando tengas desplegado el backend.",
-          true
-        );
-        return;
-      }
-
-      const body = new FormData();
-      body.append("file", file);
-
-      submitButton.disabled = true;
-      submitButton.textContent = "Analizando documento…";
-      resultBox.classList.remove("visible");
-
-      showStatus(
-        "Estamos leyendo el documento, verificando los datos y preparando el informe. " +
-        "Esto puede tardar unos minutos."
-      );
-
-      try {
-        const response = await fetch(API_URL.replace(/\/$/, "") + "/api/analyze", {
-          method: "POST",
-          body
-        });
-
-        const data = await response.json().catch(() => ({}));
-
-        if (!response.ok) {
-          throw new Error(data.detail || "No se ha podido procesar el archivo.");
-        }
-
-        renderResults(data);
-        showStatus("Análisis completado. Revisa las conclusiones antes de entregar el informe.");
-      } catch (error) {
-        showStatus(
-          error.message || "No se ha podido conectar con el servidor. Inténtalo de nuevo.",
-          true
-        );
-      } finally {
-        submitButton.disabled = false;
-        submitButton.innerHTML =
-          'Generar informe automáticamente <span class="button-arrow">→</span>';
-      }
-    });
-  </script>
 </body>
 </html>
-```
